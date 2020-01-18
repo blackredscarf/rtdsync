@@ -27,7 +27,9 @@ A stopped timer lifecycle:
 #include <mutex>
 #include <atomic>
 
-namespace rtd::time {
+namespace rtd {
+
+namespace time {
 
 using namespace std::chrono;
 using SysTimePoint = system_clock::time_point;
@@ -117,13 +119,13 @@ struct _TimersHeap {
 
     void Wait() {
         std::mutex wmu;
-        std::unique_lock lc(wmu);
+        std::unique_lock<std::mutex> lc(wmu);
         cv.wait(lc);
     }
 
     void WaitUntil(SysTimePoint& until) {
         std::mutex wmu;
-        std::unique_lock lc(wmu);
+        std::unique_lock<std::mutex> lc(wmu);
         cv.wait_until(lc, until);
     }
 
@@ -397,6 +399,6 @@ protected:
     }
 };
 
-}
+} }
 
 #endif //RTDCHAN_TICKER_H

@@ -6,6 +6,8 @@
 #include <functional>
 #include <condition_variable>
 #include <memory>
+#include <vector>
+#include <algorithm>
 
 namespace rtd {
 

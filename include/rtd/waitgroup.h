@@ -6,6 +6,7 @@
 #include <atomic>
 #include <iostream>
 #include <sstream>
+
 namespace rtd {
 
 class WaitGroup {
@@ -44,7 +45,7 @@ public:
             return;
         }
         w_ += 1;
-        std::unique_lock lc(mu_);
+        std::unique_lock<std::mutex> lc(mu_);
         cv_.wait(lc, [&]() { return c_ == 0; });
     }
 

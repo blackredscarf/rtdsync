@@ -6,6 +6,22 @@ Included Components:
 - Timer: A timer returning a channel.
 - WaitGroup: Blocking until all tasks being done.
 
+## Install
+
+Environment:
+- C++ 11+
+- CMake 3.13+
+
+Commands:
+```
+git clone https://github.com/blackredscarf/rtdsync
+cd rtdsync
+mkdir build
+cd build
+cmake ..
+cmake build . --target install
+```
+
 ## Example
 
 ### Channel
