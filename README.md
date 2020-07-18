@@ -5,6 +5,7 @@ Included Components:
 - Chan: Channel implementation.
 - Timer: A timer returning a channel.
 - WaitGroup: Blocking until all tasks being done.
+- RingBuffer: A lock-free queue from [here](https://github.com/Workiva/go-datastructures/blob/master/queue/ring.go).
 
 ## Install
 
@@ -247,5 +248,40 @@ void TestWait() {
 
 int main() {
     TestWait();
+}
+```
+
+### RingBuffer
+```cpp
+#include <rtd/ringbuf.h>
+#include <iostream>
+#include <thread>
+using namespace std;
+
+void test() {
+    auto r = rtd::RingBuffer<int>(6);
+    cout << r.Cap() << endl; // 8
+    cout << r.Len() << endl;
+
+    thread([&]() {
+        int i = 0;
+        for(;;) {
+            this_thread::sleep_for(chrono::seconds(1));
+            if(!r.Put(i)) { break; }   // Break when disposed
+            cout << "Put: " << i++ << endl;
+        }
+    }).detach();
+
+    for(int i = 0; i < 10; i++) {
+        int v;
+        r.Get(&v);
+        cout << "Get: " << v << endl;
+    }
+    r.Disposed();
+    cout << "Disposed" << endl;
+}
+
+int main() {
+    test();
 }
 ```
