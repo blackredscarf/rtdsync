@@ -121,6 +121,10 @@ public:
         return cap_;
     }
 
+    ~RingBuffer() {
+        delete [] buf_;
+    }
+
 private:
     _node<T>* buf_;
     size_t cap_;
